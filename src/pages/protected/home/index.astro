@@ -1,0 +1,119 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+
+const API_BASE_URL = "http://localhost:1337"; // Change if deployed
+const resTrue = await fetch(
+  `${API_BASE_URL}/api/blogs?populate=*&filters[IsFeatured][$eq]=true&filters[hotel][documentId][$eq]=w12z6l3u4cknzds9qngk9jj1`
+);
+const blogsData = await resTrue.json();
+
+const resFalse = await fetch(
+  `${API_BASE_URL}/api/blogs?populate=*&filters[IsFeatured][$eq]=false&filters[hotel][documentId][$eq]=w12z6l3u4cknzds9qngk9jj1`
+);
+const blogsDataFalse = await resFalse.json();
+
+---
+
+<Layout>
+  <div class="bg-white py-2">
+    <div class="mx-auto max-w-8/12 px-6 lg:px-8">
+      <div class="carousel w-full">
+        {blogsData.data.length > 0 ? (
+          blogsData.data.map((blog: any, index: number) => (
+              <div key={blog.id} id={`slide${index}`} class="carousel-item relative w-full">
+                <article class="mx-auto mt-16 grid max-w-2xl grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none">
+                  <div class="relative aspect-video sm:aspect-2/1 lg:aspect-square lg:w-10/12 lg:shrink-0">
+                    <img
+                      src={`${API_BASE_URL}${blog?.thumbnail?.formats?.small?.url}`}
+                      alt={blog?.thumbnail?.formats?.medium?.name}
+                      class="absolute inset-0 w-full h-full rounded-2xl bg-gray-50 object-cover"
+                    />
+                    <div class="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
+                  </div>
+                  <div>
+                    <div class="group relative max-w-xl">
+                      <h3 class="mt-3 text-lg lg:text-2xl font-semibold text-gray-900 group-hover:text-gray-600">
+                        <a href="#">
+                          <span class="absolute inset-0" />
+                          {blog.title}
+                        </a>
+                      </h3>
+                      <p class="mt-5 text-sm lg:text-lg text-gray-600">
+                        {blog.description}
+                      </p>
+                    </div>
+                    <div class="mt-6 flex border-t border-gray-900/5 pt-6">
+                      <div class="relative flex items-center gap-x-4">
+                        <div class="text-sm lg:text-base">
+                          <p class="font-semibold text-indigo-600">
+                            <a href="#">
+                              <span class="absolute inset-0" />
+                              Read more
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+                <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+                  <a href={`#slide${index === 0 ? blogsData.data.length - 1 : index - 1}`} class="btn btn-circle">❮</a>
+                  <a href={`#slide${index === blogsData.data.length - 1 ? 0 : index + 1}`} class="btn btn-circle">❯</a>
+                </div>
+              </div>
+          ))
+        ) : (
+          <></>
+        )}
+      </div>
+      <div
+        class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+      >
+      {blogsDataFalse?.data?.length > 0 ? (
+        blogsDataFalse?.data.map((blogF: any) => (
+        <article key={blogF.id} class="flex flex-col items-start justify-between">
+          <div class="relative w-full">
+            <img
+              src={`${API_BASE_URL}${blogF?.thumbnail?.formats?.small?.url}`}
+              alt={blogF?.thumbnail?.formats?.medium?.name}
+              class="aspect-video w-full rounded-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2"
+            />
+            <div
+              class="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset"
+            >
+            </div>
+          </div>
+          <div class="max-w-xl mt-2">
+            <div class="group relative">
+              <h3
+                class="mt-3 text-lg lg:text-2xl font-semibold text-gray-900 group-hover:text-gray-600"
+              >
+                <a href="#">
+                  <span class="absolute inset-0"></span>
+                  {blogF?.title}
+                </a>
+              </h3>
+              <p class="mt-5 line-clamp-3 text-sm lg:text-lg text-gray-600">
+                {blogF?.description}
+              </p>
+            </div>
+            <div class="relative mt-8 flex items-center gap-x-4">
+              <div class="text-sm lg:text-base">
+                <p class="font-semibold text-indigo-600">
+                  <a href="#">
+                    <span class="absolute inset-0"></span>
+                    Read more
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+        ))
+      ) : (
+        <></>
+      )}
+      </div>
+    </div>
+  </div>
+</Layout>

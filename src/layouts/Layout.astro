@@ -1,4 +1,6 @@
 ---
+import Footer from "../components/footer.astro";
+import Header from "../components/header.astro";
 import "../styles/global.css";
 import '@fontsource/noto-sans-thai';
 ---
@@ -13,7 +15,9 @@ import '@fontsource/noto-sans-thai';
 		<title>Astro Basics</title>
 	</head>
 	<body>
+		<Header />
 		<slot />
+		<Footer />
 	</body>
 </html>
 

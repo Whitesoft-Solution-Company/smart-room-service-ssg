@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 /* ibm-plex-sans-thai-latin-400-normal */
 @font-face {
