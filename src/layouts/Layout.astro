@@ -1,6 +1,15 @@
 ---
+import Footer from "../components/footer.astro";
+import Header from "../components/header.astro";
 import "../styles/global.css";
 import '@fontsource/noto-sans-thai';
+
+const API_BASE_URL = "http://localhost:1337"; // Change if deployed
+const res = await fetch(
+  `${API_BASE_URL}/api/hotels/w12z6l3u4cknzds9qngk9jj1?populate=*`
+);
+const { data: hotels } = await res.json();
+
 ---
 
 <!doctype html>
@@ -10,10 +19,12 @@ import '@fontsource/noto-sans-thai';
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{hotels.name}</title>
 	</head>
-	<body>
+	<body class="grid min-h-screen grid-rows-[auto_1fr_auto]">
+		<Header hotels={hotels} />
 		<slot />
+		<Footer hotels={hotels} />
 	</body>
 </html>
 

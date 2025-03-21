@@ -1,0 +1,16 @@
+---
+const { hotels } = Astro.props;
+const API_BASE_URL = "http://localhost:1337";
+---
+
+<header class="bg-white">
+  <nav class="mx-auto flex max-w-9/12 items-center justify-center p-10 lg:px-8" aria-label="Global">
+    <div class="flex lg:flex-1 justify-center">
+      <a href="/protected/home" class="-m-1.5 p-1.5">
+        <span class="sr-only">{hotels?.name}</span>
+        <img class="h-10 w-auto" src={`${API_BASE_URL}${hotels?.logo?.url}`} alt={hotels?.name}>
+      </a>
+    </div>
+  </nav>
+  </div>
+</header>
