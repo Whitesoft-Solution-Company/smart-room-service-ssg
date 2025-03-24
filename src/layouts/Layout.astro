@@ -3,13 +3,6 @@ import Footer from "../components/footer.astro";
 import Header from "../components/header.astro";
 import "../styles/global.css";
 import '@fontsource/noto-sans-thai';
-
-const API_BASE_URL = "http://localhost:1337"; // Change if deployed
-const res = await fetch(
-  `${API_BASE_URL}/api/hotels/w12z6l3u4cknzds9qngk9jj1?populate=*`
-);
-const { data: hotels } = await res.json();
-
 ---
 
 <!doctype html>
@@ -17,14 +10,14 @@ const { data: hotels } = await res.json();
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href='/favicon.svg' id="favicon" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{hotels.name}</title>
+		<title id="title"></title>
 	</head>
 	<body class="grid min-h-screen grid-rows-[auto_1fr_auto]">
-		<Header hotels={hotels} />
+		<Header />
 		<slot />
-		<Footer hotels={hotels} />
+		<Footer />
 	</body>
 </html>
 
@@ -39,3 +32,44 @@ const { data: hotels } = await res.json();
 	}
 
 </style>
+
+<script>
+	import { STRAPI_API } from "astro:env/client";
+	function getCookie(name: string) {
+	  const cookies = document.cookie.split('; ');
+	  for (let cookie of cookies) {
+		const [key, value] = cookie.split('=');
+		if (key === name) return decodeURIComponent(value);
+	  }
+	  return null;
+	}
+  
+	document.addEventListener("DOMContentLoaded", async () => {
+	  const authToken = getCookie("authToken");
+
+	  if (authToken) {
+		try {
+		  const res = await fetch(
+			`${STRAPI_API}/api/hotels/${authToken}?populate=*`
+		  );
+		  const { data: hotels } = await res.json();
+			
+		  if (hotels) {
+			const titleElement = document.getElementById("title");
+			if (titleElement) {
+			  (titleElement as HTMLImageElement).innerHTML = hotels?.name;
+			}
+
+			const faviconElement = document.getElementById("favicon");
+			if (faviconElement) {
+			  (faviconElement as HTMLLinkElement).href = STRAPI_API + hotels?.favicon?.url;
+			}
+		  } else {
+			console.log("No hotels found.");
+		  }
+		} catch (error) {
+		  console.error("Error fetching hotels:", error);
+		}
+	  }
+	});
+  </script>

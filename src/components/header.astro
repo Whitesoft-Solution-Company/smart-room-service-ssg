@@ -1,16 +1,52 @@
----
-const { hotels } = Astro.props;
-const API_BASE_URL = "http://localhost:1337";
----
-
 <header class="bg-white">
   <nav class="mx-auto flex max-w-9/12 items-center justify-center p-10 lg:px-8" aria-label="Global">
     <div class="flex lg:flex-1 justify-center">
       <a href="/protected/home" class="-m-1.5 p-1.5">
-        <span class="sr-only">{hotels?.name}</span>
-        <img class="h-10 w-auto" src={`${API_BASE_URL}${hotels?.logo?.url}`} alt={hotels?.name}>
+        <!-- <span class="sr-only">{hotels?.name}</span> -->
+        <img id="hotelImage" class="h-10 w-auto" >
       </a>
     </div>
   </nav>
   </div>
 </header>
+
+<script>
+  import { STRAPI_API } from "astro:env/client";
+  function getCookie(name: string) {
+    const cookies = document.cookie.split('; ');
+    for (let cookie of cookies) {
+      const [key, value] = cookie.split('=');
+      if (key === name) return decodeURIComponent(value);
+    }
+    return null;
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const authToken = getCookie("authToken"); // Retrieve authToken from cookies
+    if (authToken) {
+      try {
+        const res = await fetch(
+          `${STRAPI_API}/api/hotels/${authToken}?populate=*`
+        );
+        const { data: hotels } = await res.json();
+
+        if (hotels) {
+          const hotelImageUrl = hotels?.logo?.url;
+          const imgElement = document.getElementById("hotelImage");
+
+          if (imgElement && hotelImageUrl) {
+            (imgElement as HTMLImageElement).src = STRAPI_API + hotelImageUrl;
+          } else {
+            if (imgElement) {
+              (imgElement as HTMLImageElement).src = "/no-photo.png";
+            }
+          }
+        } else {
+          console.log("No hotels found.");
+        }
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    }
+  });
+</script>
