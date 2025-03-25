@@ -12,3 +12,16 @@
 
 [environment]
   STRAPI_API = "http://wallserver.dyndns.info:10088"
+
+[[redirects]]
+  from = "/api/hotels/*"
+  to = "http://wallserver.dyndns.info:10088/api/hotels/:splat"
+  status = 200
+  force = true
+
+  
+[[redirects]]
+  from = "/api/blogs/*"
+  to = "http://wallserver.dyndns.info:10088/api/blogs/:splat"
+  status = 200
+  force = true
