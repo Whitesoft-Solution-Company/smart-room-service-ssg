@@ -3,15 +3,16 @@ import Layout from "../../../layouts/Layout.astro";
 import FeaturedBlogs from "../../../components/home/featuredBlogs.astro";
 import BlogList from "../../../components/home/blogList.astro";
 
-const API_BASE_URL = "http://localhost:1337"; // Change if deployed
+const API_BASE_URL = import.meta.env.STRAPI_API;
+const authToken = Astro.cookies.get('authToken')?.value;
 
 const resTrue = await fetch(
-  `${API_BASE_URL}/api/blogs?populate=*&filters[IsFeatured][$eq]=true&filters[hotel][documentId][$eq]=w12z6l3u4cknzds9qngk9jj1`
+  `${API_BASE_URL}/api/blogs?populate=*&filters[IsFeatured][$eq]=true&filters[hotel][documentId][$eq]=${authToken}`
 );
 const blogsData = await resTrue.json();
 
 const resFalse = await fetch(
-  `${API_BASE_URL}/api/blogs?populate=*&filters[IsFeatured][$eq]=false&filters[hotel][documentId][$eq]=w12z6l3u4cknzds9qngk9jj1`
+  `${API_BASE_URL}/api/blogs?populate=*&filters[IsFeatured][$eq]=false&filters[hotel][documentId][$eq]=${authToken}`
 );
 const blogsDataFalse = await resFalse.json();
 ---

@@ -13,7 +13,7 @@ const { blogs, API_BASE_URL } = Astro.props;
         <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm/6 text-gray-300">
         </div>
         <h3 class="mt-3 text-md lg:text-xl font-semibold text-white">
-          <a href="#">
+          <a href={`/protected/blog/${blog?.slug}`} >
             <span class="absolute inset-0"></span>
             {blog?.title}
           </a>
