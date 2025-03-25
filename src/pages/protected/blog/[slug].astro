@@ -1,5 +1,4 @@
 ---
-import qs from "qs";
 import Layout from "../../../layouts/Layout.astro";
 import SingleBlogItem from "../../../components/blog/SingleBlogItem.astro";
 export const prerender = true;
@@ -10,12 +9,22 @@ export async function getStaticPaths() {
   // Fetch blog post by slug
   const url = `${API_BASE_URL}/api/blogs?populate=*`;
   const response = await fetch(url);
-  const data = await response.json();
-
-  return data.data.map((blog: any) => ({
-    params: { slug: blog.slug },
-    props: { blog },
-  })) || [];
+  
+  if (!response.ok) {
+    console.error(`Error: ${response.status} ${response.statusText}`);
+    return [];
+  }
+  
+  try {
+    const data = await response.json();
+    return data.data.map((blog: any) => ({
+      params: { slug: blog.slug },
+      props: { blog },
+    })) || [];
+  } catch (error) {
+    console.error("Error parsing JSON:", error);
+    return [];
+  }
 
 }
 
