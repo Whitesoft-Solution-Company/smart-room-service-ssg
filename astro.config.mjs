@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import netlify from '@astrojs/netlify';
 import tailwindcss from "@tailwindcss/vite";
 
@@ -21,7 +21,16 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    define: {
+      'import.meta.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL)
+    }
   },
 
   integrations: [alpinejs()],
+
+  env: {
+    schema: {
+      STRAPI_API: envField.string({ context: "client", access: "public", optional: true }),
+    }
+  }
 });
