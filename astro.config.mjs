@@ -30,6 +30,7 @@ export default defineConfig({
 
   env: {
     schema: {
+      API_BASE_URL: envField.string({ context: "client", access: "public", optional: false }),
       STRAPI_API: envField.string({ context: "client", access: "public", optional: true }),
     }
   }

@@ -3,7 +3,7 @@ import Layout from "../../../layouts/Layout.astro";
 import FeaturedBlogs from "../../../components/home/featuredBlogs.astro";
 import BlogList from "../../../components/home/blogList.astro";
 
-const API_BASE_URL = import.meta.env.STRAPI_API;
+const API_BASE_URL = import.meta.env.STRAPI_API || 'http://wallserver.dyndns.info:10088';
 const authToken = Astro.cookies.get('authToken')?.value;
 
 const resTrue = await fetch(

@@ -3,7 +3,7 @@ import { marked } from "marked";
 
 const { blog } = Astro.props;
 const { featuredImage, title, content } = blog;
-const url = import.meta.env.STRAPI_API;
+const url = import.meta.env.STRAPI_API || 'http://wallserver.dyndns.info:10088';
 const postImage = featuredImage || null;
 
 ---

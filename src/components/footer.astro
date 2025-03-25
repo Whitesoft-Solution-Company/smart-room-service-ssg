@@ -39,7 +39,6 @@ const { hotels } = Astro.props;
 
     // Make API request using the cookie
     if (authToken) {
-      const API_BASE_URL = import.meta.env.STRAPI_API;
       try {
         const res = await fetch(
           `${STRAPI_API}/api/hotels/${authToken}?populate=*`
