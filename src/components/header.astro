@@ -12,6 +12,7 @@
 
 <script>
   import { STRAPI_API } from "astro:env/client";
+  
   function getCookie(name: string) {
     const cookies = document.cookie.split('; ');
     for (let cookie of cookies) {
@@ -26,7 +27,7 @@
     if (authToken) {
       try {
         const res = await fetch(
-          `${STRAPI_API}/api/hotels/${authToken}?populate=*`
+          `https://service.ananyalipe.com/api/hotels/${authToken}?populate=*`
         );
         const { data: hotels } = await res.json();
 

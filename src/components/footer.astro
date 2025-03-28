@@ -41,7 +41,7 @@ const { hotels } = Astro.props;
     if (authToken) {
       try {
         const res = await fetch(
-          `${STRAPI_API}/api/hotels/${authToken}?populate=*`
+          `https://service.ananyalipe.com/api/hotels/${authToken}?populate=*`
         );
         const { data: hotels } = await res.json();
 
