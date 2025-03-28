@@ -36,7 +36,7 @@
           const imgElement = document.getElementById("hotelImage");
 
           if (imgElement && hotelImageUrl) {
-            (imgElement as HTMLImageElement).src = STRAPI_API + hotelImageUrl;
+            (imgElement as HTMLImageElement).src = `https://service.ananyalipe.com${hotelImageUrl}`;
           } else {
             if (imgElement) {
               (imgElement as HTMLImageElement).src = "/no-photo.png";
