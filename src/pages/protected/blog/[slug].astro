@@ -5,7 +5,7 @@ export const prerender = true;
 // Fetch a single blog post based on the slug
 export async function getStaticPaths() {
 
-  const API_BASE_URL = import.meta.env.STRAPI_API || 'http://wallserver.dyndns.info:10088';
+  const API_BASE_URL = import.meta.env.STRAPI_API || 'https://service.ananyalipe.com';
   // Fetch blog post by slug
   const url = `${API_BASE_URL}/api/blogs?populate=*`;
   const response = await fetch(url);

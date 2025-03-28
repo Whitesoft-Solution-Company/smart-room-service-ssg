@@ -20,7 +20,7 @@ export default async (request, context) => {
   }
 
   // Verify token with Strapi
-  const userRes = await fetch(`http://wallserver.dyndns.info:10088/api/hotels/${token}`);
+  const userRes = await fetch(`https://service.ananyalipe.com/api/hotels/${token}`);
   const userData = await userRes.json(); // Convert response to JSON
    
   // Check if token verification is valid
