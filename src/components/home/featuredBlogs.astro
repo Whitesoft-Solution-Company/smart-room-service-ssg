@@ -1,0 +1,29 @@
+---
+const { blogs, API_BASE_URL } = Astro.props;
+---
+
+{blogs.length > 0 && (
+   <div 
+    class={`mx-auto grid max-w-2xl auto-rows-fr gap-8 lg:mx-0 lg:max-w-none pb-10 lg:pb-2 ${
+      blogs.length === 1 ? 'grid-cols-1' : 'lg:grid-cols-2'
+    }`}
+  >
+    {blogs.map((blog: any) => (
+      <article class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-6 pt-20 sm:pt-48 lg:pt-40 xl:pt-60 2xl:pt-80">
+        <img src={`${API_BASE_URL}${blog?.thumbnail?.url}`}
+          alt={blog?.thumbnail?.formats?.medium?.name}  class="absolute inset-0 -z-10 size-full object-cover sm:aspect-2/1 lg:aspect-3/2">
+        <div class="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
+        <div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
+        <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm/6 text-gray-300">
+        </div>
+        <h3 class="mt-3 text-md lg:text-xl font-semibold text-white">
+          <a href={`/protected/blog/${blog?.slug}`} >
+            <span class="absolute inset-0"></span>
+            {blog?.title}
+          </a>
+        </h3>
+        <p class="mt-2 line-clamp-3 text-lg text-gray-300 hidden lg:block truncate">{blog?.description}</p>
+      </article>
+    ))}
+  </div>
+)}

@@ -9,6 +9,17 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.4.2"
+    "@astrojs/alpinejs": "^0.4.3",
+    "@astrojs/netlify": "^6.2.3",
+    "@fontsource/bai-jamjuree": "^5.2.5",
+    "@fontsource/noto-sans-thai": "^5.2.5",
+    "@fontsource/twinkle-star": "^5.2.5",
+    "@tailwindcss/vite": "^4.0.14",
+    "@types/alpinejs": "^3.13.11",
+    "alpinejs": "^3.14.9",
+    "astro": "^5.4.2",
+    "daisyui": "^5.0.6",
+    "marked": "^15.0.7",
+    "tailwindcss": "^4.0.14"
   }
 }

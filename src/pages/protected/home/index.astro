@@ -1,0 +1,27 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import FeaturedBlogs from "../../../components/home/featuredBlogs.astro";
+import BlogList from "../../../components/home/blogList.astro";
+
+const API_BASE_URL = import.meta.env.STRAPI_API || 'https://service.ananyalipe.com';
+const authToken = Astro.cookies.get('authToken')?.value;
+
+const resTrue = await fetch(
+  `${API_BASE_URL}/api/blogs?populate=*&filters[IsFeatured][$eq]=true&filters[hotel][documentId][$eq]=${authToken}`
+);
+const blogsData = await resTrue.json();
+
+const resFalse = await fetch(
+  `${API_BASE_URL}/api/blogs?populate=*&filters[IsFeatured][$eq]=false&filters[hotel][documentId][$eq]=${authToken}`
+);
+const blogsDataFalse = await resFalse.json();
+---
+
+<Layout>
+  <div>
+    <div class="mx-auto lg:max-w-9/12 max-w-11/12 px-6 lg:px-8 mt-2 lg:mt-10 mb-10">
+      <FeaturedBlogs blogs={blogsData.data} API_BASE_URL={API_BASE_URL} />
+      <BlogList blogs={blogsDataFalse.data} API_BASE_URL={API_BASE_URL} />
+    </div>
+  </div>
+</Layout>

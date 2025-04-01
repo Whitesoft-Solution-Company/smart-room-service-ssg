@@ -1,0 +1,62 @@
+---
+const { hotels } = Astro.props;
+---
+
+<footer class="bg-white relative">
+  <div class="mx-auto max-w-[91.6667%] px-6 pb-8 lg:px-8">
+    <div class="mt-8 border-t border-gray-900/10 pt-8 md:flex md:items-center md:justify-between">
+      <p class="mt-8 text-sm text-gray-600 md:order-1 md:mt-0" id="hotel">
+        &copy; 2025 Hotels, Inc. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import { STRAPI_API } from "astro:env/client";
+  function getCookie(name: string) {
+    const cookies = document.cookie.split('; ');
+    for (let cookie of cookies) {
+      const [key, value] = cookie.split('=');
+      if (key === name) return decodeURIComponent(value);
+    }
+    return null;
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    const authToken = getCookie("authToken"); // Retrieve authToken from cookies
+
+    const cookieInfoElement = document.getElementById("cookie-info");
+
+    // Display the cookie info
+    if (cookieInfoElement) {
+      if (authToken) {
+        cookieInfoElement.innerHTML = `Auth Token: ${authToken}`;
+      } else {
+        cookieInfoElement.innerHTML = "No auth token found";
+      }
+    }
+
+    // Make API request using the cookie
+    if (authToken) {
+      try {
+        const res = await fetch(
+          `https://service.ananyalipe.com/api/hotels/${authToken}?populate=*`
+        );
+        const { data: hotels } = await res.json();
+
+        if (hotels) {
+          const element = document.getElementById("hotel");
+
+          if (element) {
+            element.innerHTML = `&copy; 2025 ${hotels.name}, Inc. All rights reserved.`;
+          }
+        } else {
+          console.log("No hotels found.");
+        }
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    }
+  });
+</script>
