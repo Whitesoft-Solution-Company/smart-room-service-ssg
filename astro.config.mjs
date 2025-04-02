@@ -2,8 +2,8 @@
 import { defineConfig, envField } from 'astro/config';
 import netlify from '@astrojs/netlify';
 import tailwindcss from "@tailwindcss/vite";
-
 import alpinejs from "@astrojs/alpinejs";
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,11 +26,16 @@ export default defineConfig({
     }
   },
 
-  integrations: [alpinejs()],
+  integrations: [alpinejs(), icon()],
 
   env: {
     schema: {
       STRAPI_API: envField.string({ context: "client", access: "public", optional: true }),
     }
+  },
+
+  i18n: {
+    locales: ['en', 'th', 'zh'],
+    defaultLocale: "en"
   }
 });

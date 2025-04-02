@@ -14,10 +14,13 @@
     "@fontsource/bai-jamjuree": "^5.2.5",
     "@fontsource/noto-sans-thai": "^5.2.5",
     "@fontsource/twinkle-star": "^5.2.5",
+    "@iconify-json/circle-flags": "^1.2.6",
     "@tailwindcss/vite": "^4.0.14",
     "@types/alpinejs": "^3.13.11",
     "alpinejs": "^3.14.9",
     "astro": "^5.4.2",
+    "astro-icon": "^1.1.5",
+    "circle-flags": "github:HatScripts/circle-flags",
     "daisyui": "^5.0.6",
     "marked": "^15.0.7",
     "tailwindcss": "^4.0.14"
