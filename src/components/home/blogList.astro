@@ -1,5 +1,7 @@
 ---
+import { button } from '../../i18n/ui';
 const { blogs, API_BASE_URL, locale } = Astro.props;
+const currentLocale = (Astro.currentLocale || 'en') as keyof typeof button;
 ---
 
 <div class="mx-auto lg:mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -24,7 +26,7 @@ const { blogs, API_BASE_URL, locale } = Astro.props;
           <div class="relative mt-8 flex items-center gap-x-4">
             <div class="text-sm lg:text-base">
               <p class="font-semibold text-blue-400 hover:text-blue-500">
-                <a href={`/protected/${locale}/blog/${blogF?.slug}`} ><span class="absolute inset-0" />Read more</a>
+                <a href={`/protected/${locale}/blog/${blogF?.slug}`} ><span class="absolute inset-0" />{button[currentLocale]}</a>
               </p>
             </div>
           </div>
