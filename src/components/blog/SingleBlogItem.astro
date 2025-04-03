@@ -7,18 +7,129 @@ const url = import.meta.env.STRAPI_API || 'https://service.ananyalipe.com';
 const postImage = featuredImage || null;
 
 ---
-
+<div class="container mx-auto">
 <div class="bg-white px-6 mt-2 lg:mt-10 md:px-20 lg:px-32">
     <div class="mx-auto max-w-5xl text-base/7 text-gray-700">
-        <div class="rounded-md h-full w-full overflow-hidden">
-            <img
-                class={`${
-                    postImage ? 'w-3xl md:w-2xl lg:min-w-160' : 'w-64'
-                } object-cover justify-self-center rounded-md `}
-                src={postImage ? url + postImage.formats.small.url : '/no-photo.png'}
-            />
-        </div>
-      <h1 class="mt-10 mb-5 text-pretty text-2xl font-semibold tracking-tight text-gray-900 pt-5">{title}</h1>
-      <div class="rich-text" set:html={marked.parse(content)}  /> 
+      <h1 class={`mb-5 text-pretty text-2xl font-semibold tracking-tight text-gray-900`}>{title}</h1>
+      <article class=" prose max-w-full w-full my-4">
+        <div class="rich-text" set:html={marked.parse(content)}  /> 
+      </article> 
     </div>
   </div>
+</div>
+<style is:global>
+@import 'tailwindcss';
+    /******************************************* 
+    Rich Text Styles
+    *******************************************/
+  
+    /* Headers */
+    article .rich-text h1 {
+      @apply text-4xl font-bold mb-8 text-gray-800;
+    }
+  
+    article .rich-text h2 {
+      @apply text-3xl font-semibold mb-4 text-gray-800;
+    }
+  
+    article .rich-text h3 {
+      @apply text-2xl  mb-4 text-gray-800;
+    }
+  
+    article .rich-text h4 {
+      @apply text-xl mb-4 text-gray-800;
+    }
+  
+    article.rich-text h5 {
+      @apply text-lg mb-4 text-gray-800;
+    }
+  
+    article .rich-text h6 {
+      @apply text-base mb-4 text-gray-800;
+    }
+  
+    /* Horizontal rules */
+    article .rich-text hr {
+      @apply text-gray-800 my-8;
+    }
+  
+    article .rich-text a {
+      @apply text-blue-400 hover:text-blue-500 underline text-xl leading-relaxed;
+    }
+  
+    /* Typographic replacements */
+    article .rich-text p {
+      @apply mb-4 text-xl leading-relaxed text-gray-700;
+    }
+  
+    /* Emphasis */
+    article .rich-text strong {
+      @apply font-bold text-xl leading-relaxed;
+    }
+  
+    article .rich-text em {
+      @apply italic text-xl leading-relaxed;
+    }
+  
+    article .rich-text del {
+      @apply line-through text-xl leading-relaxed;
+    }
+  
+    /* Blockquotes */
+    article .rich-text blockquote {
+      @apply border-l-4 border-gray-400 pl-4 py-2 mb-4;
+    }
+  
+    /* Lists */
+    article .rich-text ul {
+      @apply list-disc pl-4 mb-4 text-gray-800;
+    }
+  
+    article .rich-text ol {
+      @apply list-decimal pl-4 mb-4 text-gray-800;
+    }
+  
+    article .rich-text li {
+      @apply mb-2 text-gray-800;
+    }
+  
+    article .rich-text li > ul {
+      @apply list-disc pl-4 mb-2;
+    }
+  
+    article.rich-text li > ol {
+      @apply list-decimal pl-4 mb-2;
+    }
+  
+    /* Code blocks */
+    article .rich-text pre {
+      @apply font-mono text-gray-800  rounded p-4  my-6;
+    }
+  
+    article .rich-text code {
+      @apply font-mono text-gray-800  rounded px-2 py-1;
+    }
+  
+    /* Tables */
+    article .rich-text table {
+      @apply w-full border-collapse text-gray-800 my-6;
+    }
+  
+    article .rich-text th {
+      @apply text-gray-800 text-left py-2 px-4 font-semibold border-b ;
+    }
+  
+    article .rich-text td {
+      @apply py-2 px-4 border-b text-gray-800;
+    }
+  
+    /* Images */
+    article .rich-text img {
+      @apply w-9/12 object-cover rounded-xl my-8 justify-self-center;
+    }
+  
+    /* Custom containers */
+    article .rich-text .warning {
+      @apply bg-yellow-100 border-yellow-500 text-yellow-700 px-4 py-2 rounded-lg mb-4;
+    }
+  </style>
