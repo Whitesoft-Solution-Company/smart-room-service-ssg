@@ -1,0 +1,55 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import SingleBlogItem from "../../../../components/blog/SingleBlogItem.astro";
+export const prerender = true;
+// Fetch a single blog post based on the slug
+export async function getStaticPaths() {
+  const API_BASE_URL = import.meta.env.STRAPI_API || "https://service.ananyalipe.com";
+  const url = `${API_BASE_URL}/api/blogs?populate[localizations][populate]=*`;
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.error(`Error: ${response.status} ${response.statusText}`);
+    return [];
+  }
+
+  try {
+    const data = await response.json();
+    const paths = data.data.flatMap((blog: any) => {
+      const localizedPaths = blog.localizations.map((localization: any) => {
+        
+        return {
+          params: {
+            locale: localization.locale,
+            slug: localization.slug,
+          },
+          props: { blog: localization },
+        };
+      });
+
+      return [
+        {
+          params: {
+            locale: blog.locale,
+            slug: blog.slug,
+            
+          },
+          props: { blog },
+        },
+        ...localizedPaths, // Now contains valid objects
+      ];
+    });
+
+    return paths;
+  } catch (error) {
+    console.error("Error parsing JSON:", error);
+    return [];
+  }
+}
+
+const { blog } = Astro.props;
+---
+
+<Layout title="Blog">
+  <SingleBlogItem blog={blog} />
+</Layout>

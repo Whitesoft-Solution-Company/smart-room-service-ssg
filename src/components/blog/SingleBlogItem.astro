@@ -15,10 +15,10 @@ const postImage = featuredImage || null;
                 class={`${
                     postImage ? 'w-3xl md:w-2xl lg:min-w-160' : 'w-64'
                 } object-cover justify-self-center rounded-md `}
-                src={postImage ? url + postImage.formats.small.url : '/no-photo.png'}
+                src={postImage ? url + postImage.formats.small.url : ''}
             />
         </div>
       <h1 class="mt-10 mb-5 text-pretty text-2xl font-semibold tracking-tight text-gray-900 pt-5">{title}</h1>
       <div class="rich-text" set:html={marked.parse(content)}  /> 
     </div>
-  </div>
+</div>
