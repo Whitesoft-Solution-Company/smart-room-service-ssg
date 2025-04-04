@@ -50,7 +50,7 @@ import '@fontsource/noto-sans-thai';
 	  if (authToken) {
 		try {
 		  const res = await fetch(
-			`${STRAPI_API}/api/hotels/${authToken}?populate=*`
+			`https://service.ananyalipe.com/api/hotels/${authToken}?populate=*`
 		  );
 		  const { data: hotels } = await res.json();
 			
@@ -62,7 +62,7 @@ import '@fontsource/noto-sans-thai';
 
 			const faviconElement = document.getElementById("favicon");
 			if (faviconElement) {
-			  (faviconElement as HTMLLinkElement).href = STRAPI_API + hotels?.favicon?.url;
+			  (faviconElement as HTMLLinkElement).href = `https://service.ananyalipe.com${hotels?.favicon?.url}` ;
 			}
 		  } else {
 			console.log("No hotels found.");
