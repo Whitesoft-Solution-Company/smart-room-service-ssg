@@ -5,7 +5,7 @@ const { hotels } = Astro.props;
 <footer class="bg-white relative">
   <div class="mx-auto max-w-[91.6667%] px-6 pb-8 lg:px-8">
     <div class="mt-8 border-t border-gray-900/10 pt-8 md:flex md:items-center md:justify-between">
-      <p class="mt-8 text-sm text-gray-600 md:order-1 md:mt-0" id="hotel">
+      <p class="text-sm text-gray-600 md:order-1 md:mt-0" id="hotel">
         &copy; 2025 Hotels, Inc. All rights reserved.
       </p>
     </div>
@@ -25,17 +25,6 @@ const { hotels } = Astro.props;
 
   document.addEventListener("DOMContentLoaded", async () => {
     const authToken = getCookie("authToken"); // Retrieve authToken from cookies
-
-    const cookieInfoElement = document.getElementById("cookie-info");
-
-    // Display the cookie info
-    if (cookieInfoElement) {
-      if (authToken) {
-        cookieInfoElement.innerHTML = `Auth Token: ${authToken}`;
-      } else {
-        cookieInfoElement.innerHTML = "No auth token found";
-      }
-    }
 
     // Make API request using the cookie
     if (authToken) {

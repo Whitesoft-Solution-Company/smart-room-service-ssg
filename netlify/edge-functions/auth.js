@@ -30,7 +30,7 @@ export default async (request, context) => {
   }
 
   if (url.searchParams.get("token")) {
-    return Response.redirect("/protected/home", 302); // Redirect to homepage with status 302
+    return Response.redirect("/protected/en/home", 302); // Redirect to homepage with status 302
   }
 
   return context.next(); // Continue with the request

@@ -1,30 +1,37 @@
 ---
-const { blogs, API_BASE_URL } = Astro.props;
+const { blogs, API_BASE_URL, locale } = Astro.props;
 ---
 
-<div class="mx-auto lg:mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+<div class="mx-auto lg:mt-16 grid max-w-2xl grid-cols-2 gap-x-2 lg:gap-x-8 gap-y-2 lg:gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
   {blogs.length > 0 ? (
     blogs.map((blogF: any) => (
-      <article key={blogF.id} class="flex flex-col items-start justify-between">
-        <div class="relative w-full">
-          <img
-            src={`${API_BASE_URL}${blogF?.thumbnail?.formats?.small?.url}`}
-            alt={blogF?.thumbnail?.formats?.medium?.name}
-            class="aspect-video w-full rounded-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2 transition-transform duration-300 hover:scale-105"
-          />
-          <div class="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
+      <article class="flex flex-col items-start justify-between">
+        <div class="relative w-full isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-6 pt-20 sm:pt-48 lg:pt-40 xl:pt-60 2xl:pt-80">
+        <img src={`${API_BASE_URL}${blogF?.thumbnail?.formats?.small?.url}`}
+            alt={blogF?.thumbnail?.formats?.medium?.name}  class="absolute inset-0 -z-10 size-full object-cover sm:aspect-2/1 lg:aspect-3/2">
+        <div class="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40 lg:hidden"></div>
+        <div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10 lg:hidden"></div>
+        <div class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm/6 text-gray-300 lg:hidden">
         </div>
-        <div class="max-w-xl mt-2">
+        <p class="text-sm lg:text-xl font-semibold text-white lg:hidden truncate">
+          <a href={`/protected/${locale}/blog/${blogF?.slug}`} >
+            <span class="absolute inset-0"></span>
+            {blogF?.title}
+          </a>
+        </p>
+        </div>
+        
+        <div class="max-w-xl mt-2 hidden lg:block">
           <div class="group relative">
             <h3 class="mt-3 text-lg lg:text-2xl font-semibold text-gray-900 transition-colors duration-300 group-hover:text-gray-600">
-              <a href="#"><span class="absolute inset-0" />{blogF?.title}</a>
+              <a href={`/protected/${locale}/blog/${blogF?.slug}`}><span class="absolute inset-0" />{blogF?.title}</a>
             </h3>
             <p class="mt-5 line-clamp-3 text-sm lg:text-lg text-gray-600">{blogF?.description}</p>
           </div>
           <div class="relative mt-8 flex items-center gap-x-4">
             <div class="text-sm lg:text-base">
               <p class="font-semibold text-blue-400 hover:text-blue-500">
-                <a href={`/protected/blog/${blogF?.slug}`} ><span class="absolute inset-0" />Read more</a>
+                <a href={`/protected/${locale}/blog/${blogF?.slug}`} ><span class="absolute inset-0" />Read more</a>
               </p>
             </div>
           </div>

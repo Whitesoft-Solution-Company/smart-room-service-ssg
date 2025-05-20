@@ -1,18 +1,50 @@
+---
+import { Icon } from 'astro-icon/components'
+import { languages } from '../i18n/ui';
+
+const currentLocale = (Astro.currentLocale || 'en') as keyof typeof languages;
+const currentPath = Astro.url.pathname;
+
+const getLocalizedPath = (newLang: string) => {
+  const pathSegments = currentPath.split("/").filter(Boolean);
+
+  if (pathSegments.length > 1 && pathSegments[1].length === 2) {
+    pathSegments[1] = newLang;
+  } else {
+    pathSegments.splice(1, 0, newLang);
+  }
+
+  return `/${pathSegments.join("/")}`;
+};
+
+---
+
 <header class="bg-white">
-  <nav class="mx-auto flex max-w-9/12 items-center justify-center p-10 lg:px-8" aria-label="Global">
+  <nav class="mx-auto flex max-w-9/12 items-center justify-between py-5 lg:px-8" aria-label="Global">
     <div class="flex lg:flex-1 justify-center">
-      <a href="/protected/home" class="-m-1.5 p-1.5">
-        <!-- <span class="sr-only">{hotels?.name}</span> -->
+      <a href=`/protected/${currentLocale}/home` class="-m-1.5 p-1.5">
         <img id="hotelImage" class="h-10 w-auto" >
       </a>
     </div>
+    <!-- Language Switcher -->
+  <div>
+    <details class="dropdown dropdown-end">
+      
+      <summary class="btn m-1"><Icon name=`circle-flags:${currentLocale}` /></span>{languages[currentLocale]}</summary>
+      <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-30 p-2 shadow-sm">
+        {Object.entries(languages).map(([lang, label]) => (
+          <li><a href={getLocalizedPath(lang)}><Icon name=`circle-flags:${lang}` />{label}</a></li>
+        ))}
+      </ul>
+    </details>
+  </div>
   </nav>
   </div>
 </header>
 
 <script>
   import { STRAPI_API } from "astro:env/client";
-  
+
   function getCookie(name: string) {
     const cookies = document.cookie.split('; ');
     for (let cookie of cookies) {
