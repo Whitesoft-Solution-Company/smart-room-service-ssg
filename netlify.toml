@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[edge_functions]]
+  path = "/protected/*"
+  function = "auth"
+
+[[edge_functions]]
+  path = "/protected"
+  function = "auth"
+
+[environment]
+  STRAPI_API = "https://service.ananyalipe.com"

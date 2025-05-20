@@ -1,0 +1,75 @@
+---
+import Footer from "../components/footer.astro";
+import Header from "../components/header.astro";
+import "../styles/global.css";
+import '@fontsource/noto-sans-thai';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href='/favicon.svg' id="favicon" />
+		<meta name="generator" content={Astro.generator} />
+		<title id="title"></title>
+	</head>
+	<body class="grid min-h-screen grid-rows-[auto_1fr_auto]">
+		<Header />
+		<slot />
+		<Footer />
+	</body>
+</html>
+
+<style>
+	html {
+		font-family: 'IBM Plex Sans Thai', sans-serif;
+	}
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+</style>
+
+<script>
+	import { STRAPI_API } from "astro:env/client";
+	function getCookie(name: string) {
+	  const cookies = document.cookie.split('; ');
+	  for (let cookie of cookies) {
+		const [key, value] = cookie.split('=');
+		if (key === name) return decodeURIComponent(value);
+	  }
+	  return null;
+	}
+  
+	document.addEventListener("DOMContentLoaded", async () => {
+	  const authToken = getCookie("authToken");
+
+	  if (authToken) {
+		try {
+		  const res = await fetch(
+			`https://service.ananyalipe.com/api/hotels/${authToken}?populate=*`
+		  );
+		  const { data: hotels } = await res.json();
+			
+		  if (hotels) {
+			const titleElement = document.getElementById("title");
+			if (titleElement) {
+			  (titleElement as HTMLImageElement).innerHTML = hotels?.name + ` | Smart room service`;
+			}
+
+			const faviconElement = document.getElementById("favicon");
+			if (faviconElement) {
+			  (faviconElement as HTMLLinkElement).href = `https://service.ananyalipe.com${hotels?.favicon?.url}` ;
+			}
+		  } else {
+			console.log("No hotels found.");
+		  }
+		} catch (error) {
+		  console.error("Error fetching hotels:", error);
+		}
+	  }
+	});
+  </script>
