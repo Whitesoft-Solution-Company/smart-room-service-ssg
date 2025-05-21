@@ -15,10 +15,6 @@ export default defineConfig({
     edgeMiddleware: true
   }),
 
-  experimental: {
-    svg: true,
-  },
-
   vite: {
     plugins: [tailwindcss()],
     define: {

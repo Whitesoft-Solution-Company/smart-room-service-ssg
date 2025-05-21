@@ -2,6 +2,15 @@
 import Layout from "../../../../layouts/Layout.astro";
 import SingleBlogItem from "../../../../components/blog/SingleBlogItem.astro";
 export const prerender = true;
+
+interface Blog extends BlogLocalization {
+  localizations: BlogLocalization[];
+}
+interface BlogLocalization {
+  locale: string;
+  slug: string;
+  [key: string]: any;
+}
 // Fetch a single blog post based on the slug
 export async function getStaticPaths() {
   const API_BASE_URL = import.meta.env.STRAPI_API || "https://service.ananyalipe.com";
@@ -15,24 +24,24 @@ export async function getStaticPaths() {
 
   try {
     const data = await response.json();
-    const paths = data.data.flatMap((blog: any) => {
-      const localizedPaths = blog.localizations.map((localization: any) => {
-        
-        return {
-          params: {
-            locale: localization.locale,
-            slug: localization.slug,
-          },
-          props: { blog: localization },
-        };
-      });
+    const paths = data.data.flatMap((blog: Blog) => {
+      const localizedPaths = blog.localizations.map(
+        (localization: BlogLocalization) => {
+          return {
+            params: {
+              locale: localization.locale,
+              slug: localization.slug,
+            },
+            props: { blog: localization },
+          };
+        }
+      );
 
       return [
         {
           params: {
             locale: blog.locale,
             slug: blog.slug,
-            
           },
           props: { blog },
         },

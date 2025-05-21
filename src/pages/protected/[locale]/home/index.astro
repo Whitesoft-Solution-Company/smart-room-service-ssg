@@ -7,10 +7,15 @@ const API_BASE_URL = import.meta.env.STRAPI_API || 'https://service.ananyalipe.c
 const authToken = Astro.cookies.get('authToken')?.value;
 const { locale } = Astro.params;
 
-const fetchBlogs = async (isFeatured: boolean) => {
+const fetchBlogs = async (isFeatured: boolean): Promise<any> => {
+  if (!authToken) {
+    throw new Error('Authentication token not found');
+  }
+  
   const response = await fetch(
-    `${API_BASE_URL}/api/blogs?populate=*&filters[IsFeatured][$eq]=${isFeatured}&filters[hotel][documentId][$eq]=${authToken}&filters[locale][$eq]=${locale}`
+    `${API_BASE_URL}/api/blogs?sort=rank:asc&populate=*&filters[IsFeatured][$eq]=${isFeatured}&filters[hotel][documentId][$eq]=${authToken}&filters[locale][$eq]=${locale}&sort[0]=createdAt:asc`
   );
+  
   return response.json();
 };
 
@@ -20,7 +25,7 @@ const blogsDataFalse = await fetchBlogs(false);
 
 <Layout>
   <div>
-    <div class="mx-auto lg:max-w-9/12 max-w-11/12 lg:px-8 mt-2 lg:mt-10 mb-10">
+    <div class="mx-auto lg:max-w-9/12 max-w-11/12 lg:px-8 mt-2 lg:mt-10 mb-10 bg-white dark:bg-gray-900">
       <FeaturedBlogs blogs={blogsData.data} API_BASE_URL={API_BASE_URL} locale={locale} />
       <BlogList blogs={blogsDataFalse.data} API_BASE_URL={API_BASE_URL} locale={locale}/>
     </div>
