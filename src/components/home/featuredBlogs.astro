@@ -1,5 +1,19 @@
 ---
 const { blogs, API_BASE_URL, locale } = Astro.props;
+interface Blog {
+  id: string | number;
+  title: string;
+  slug: string;
+  description?: string;
+  thumbnail?: {
+    url?: string;
+    formats?: {
+      medium?: {
+        name?: string;
+      };
+    };
+  };
+}
 ---
 
 {blogs.length > 0 && (
@@ -8,7 +22,7 @@ const { blogs, API_BASE_URL, locale } = Astro.props;
       blogs.length === 1 ? 'grid-cols-1' : 'lg:grid-cols-2'
     }`}
   >
-    {blogs.map((blog: any) => (
+    {[...blogs].sort((a, b) => a.rank - b.rank).map((blog: Blog) => (
       <article class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-5 pt-20 sm:pt-48 lg:pt-40 xl:pt-60 2xl:pt-80">
         <img src={`${API_BASE_URL}${blog?.thumbnail?.url}`}
           alt={blog?.thumbnail?.formats?.medium?.name}  class="absolute inset-0 -z-10 size-full object-cover sm:aspect-2/1 lg:aspect-3/2">

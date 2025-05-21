@@ -8,9 +8,9 @@ const postImage = featuredImage || null;
 
 ---
 <div class="container mx-auto">
-<div class="bg-white px-6 mt-2 lg:mt-10 md:px-20 lg:px-32">
+<div class="bg-white dark:bg-gray-900 px-6 mt-2 lg:mt-10 md:px-20 lg:px-32">
     <div class="mx-auto max-w-5xl text-base/7 text-gray-700">
-      <h1 class={`mb-5 text-pretty text-2xl font-semibold tracking-tight text-gray-900`}>{title}</h1>
+      <h1 class={`mb-5 text-pretty text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-100`}>{title}</h1>
       <article class=" prose max-w-full w-full my-4">
         <div class="rich-text" set:html={marked.parse(content)}  /> 
       </article> 
@@ -25,32 +25,32 @@ const postImage = featuredImage || null;
   
     /* Headers */
     article .rich-text h1 {
-      @apply text-4xl font-bold mb-8 text-gray-800;
+      @apply text-4xl font-bold mb-8 text-gray-800 dark:text-gray-100;
     }
   
     article .rich-text h2 {
-      @apply text-3xl font-semibold mb-4 text-gray-800;
+      @apply text-3xl font-semibold mb-4 text-gray-800 dark:text-gray-100;
     }
   
     article .rich-text h3 {
-      @apply text-2xl  mb-4 text-gray-800;
+      @apply text-2xl  mb-4 text-gray-800 dark:text-gray-100;
     }
   
     article .rich-text h4 {
-      @apply text-xl mb-4 text-gray-800;
+      @apply text-xl mb-4 text-gray-800 dark:text-gray-100;
     }
   
     article.rich-text h5 {
-      @apply text-lg mb-4 text-gray-800;
+      @apply text-lg mb-4 text-gray-800 dark:text-gray-100;
     }
   
     article .rich-text h6 {
-      @apply text-base mb-4 text-gray-800;
+      @apply text-base mb-4 text-gray-800 dark:text-gray-100;
     }
   
     /* Horizontal rules */
     article .rich-text hr {
-      @apply text-gray-800 my-8;
+      @apply text-gray-800 my-8 dark:text-gray-100;
     }
   
     article .rich-text a {
@@ -59,7 +59,7 @@ const postImage = featuredImage || null;
   
     /* Typographic replacements */
     article .rich-text p {
-      @apply mb-4 text-xl leading-relaxed text-gray-700;
+      @apply mb-4 text-base leading-relaxed text-gray-700 dark:text-gray-100;
     }
   
     /* Emphasis */
@@ -82,15 +82,15 @@ const postImage = featuredImage || null;
   
     /* Lists */
     article .rich-text ul {
-      @apply list-disc pl-4 mb-4 text-gray-800;
+      @apply list-disc pl-4 mb-4 text-gray-800 dark:text-gray-100;
     }
   
     article .rich-text ol {
-      @apply list-decimal pl-4 mb-4 text-gray-800;
+      @apply list-decimal pl-4 mb-4 text-gray-800 dark:text-gray-100;
     }
   
     article .rich-text li {
-      @apply mb-2 text-gray-800;
+      @apply mb-2 text-gray-800 dark:text-gray-100;
     }
   
     article .rich-text li > ul {
@@ -103,24 +103,24 @@ const postImage = featuredImage || null;
   
     /* Code blocks */
     article .rich-text pre {
-      @apply font-mono text-gray-800  rounded p-4  my-6;
+      @apply font-mono text-gray-800  rounded p-4  my-6 dark:text-gray-100;
     }
   
     article .rich-text code {
-      @apply font-mono text-gray-800  rounded px-2 py-1;
+      @apply font-mono text-gray-800  rounded px-2 py-1 dark:text-gray-100;
     }
   
     /* Tables */
     article .rich-text table {
-      @apply w-full border-collapse text-gray-800 my-6;
+      @apply w-full border-collapse text-gray-800 my-6 dark:text-gray-100;
     }
   
     article .rich-text th {
-      @apply text-gray-800 text-left py-2 px-4 font-semibold border-b ;
+      @apply text-gray-800 text-left py-2 px-4 font-semibold border-b dark:text-gray-100;
     }
   
     article .rich-text td {
-      @apply py-2 px-4 border-b text-gray-800;
+      @apply py-2 px-4 border-b text-gray-800 dark:text-gray-100;
     }
   
     /* Images */
