@@ -2,31 +2,38 @@
 export default async (request, context) => {
   const url = new URL(request.url);
 
-  let token = url.searchParams.get("token");
-
-  if (!token) {
-    token = context.cookies.get("authToken"); // If no token in query, check cookies
-    if (!token) {
-      return Response.redirect("/401", 302);
-    }
-  }
-
-  // Only set the token cookie if it's not already present
-  if (!context.cookies.get("authToken")) {
-    context.cookies.set({
-        name: "authToken",
-        value: token,
-    });
+  const token = url.searchParams.get("token");
+  const authToken = context.cookies.get("authToken");
+  const tokenVerified = token || authToken;
+  if (!tokenVerified) {
+    return Response.redirect("/401", 302);
   }
 
   // Verify token with Strapi
-  const userRes = await fetch(`https://service.ananyalipe.com/api/hotels/${token}`);
+  const userRes = await fetch(`https://service.ananyalipe.com/api/hotels/${tokenVerified}`);
   const userData = await userRes.json(); // Convert response to JSON
    
   // Check if token verification is valid
   if (!userRes.ok || userData.data === null) {
-      context.cookies.set("authToken", "", { expires: new Date(0) }); // Clear the cookie
+      context.cookies.set({
+        name: "authToken",
+        value: "",
+        httpOnly: true,
+        path: "/",
+        maxAge: 60 * 60 * 24 * 1 // 1 day
+      });
       return Response.redirect("/401", 302);
+  }
+
+  // Set the cookie with the token
+  if(token && token !== authToken) {
+    context.cookies.set({
+      name: "authToken",
+      value: tokenVerified,
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7 // 7 days
+    });
   }
 
   if (url.searchParams.get("token")) {
