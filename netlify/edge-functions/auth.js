@@ -18,7 +18,7 @@ export default async (request, context) => {
       context.cookies.set({
         name: "authToken",
         value: "",
-        httpOnly: true,
+        httpOnly: false,
         path: "/",
         maxAge: 60 * 60 * 24 * 1 // 1 day
       });
@@ -30,7 +30,7 @@ export default async (request, context) => {
     context.cookies.set({
       name: "authToken",
       value: tokenVerified,
-      httpOnly: true,
+      httpOnly: false,
       path: "/",
       maxAge: 60 * 60 * 24 * 7 // 7 days
     });
