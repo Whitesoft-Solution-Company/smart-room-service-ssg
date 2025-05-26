@@ -2,6 +2,10 @@
 import { Icon } from 'astro-icon/components'
 import { languages } from '../i18n/ui';
 
+const API_BASE_URL = import.meta.env.STRAPI_API || 'https://service.ananyalipe.com';
+const { hotel } = Astro.props;
+const { name, logo } = hotel;
+
 const currentLocale = (Astro.currentLocale || 'en') as keyof typeof languages;
 const currentPath = Astro.url.pathname;
 const authToken = Astro.cookies.get('authToken')?.value;
@@ -24,7 +28,11 @@ const getLocalizedPath = (newLang: string) => {
   <nav class="mx-auto flex max-w-9/12 items-center justify-between py-5 lg:px-8" aria-label="Global">
     <div class="flex lg:flex-1 justify-center">
       <a href=`/protected/${currentLocale}/home` class="-m-1.5 p-1.5">
-        <img id="hotelImage" class="h-10 w-auto" >
+        {logo ? (
+          <img id="hotelImage" class="h-10 w-auto" src={`${API_BASE_URL + logo.url}`} alt={name} />
+        ): (
+            <img id="hotelImage" class="h-10 w-auto" src={`../../public/no-image.svg`} alt="No logo available" />
+        )}
       </a>
     </div>
     <!-- Language Switcher -->
@@ -53,7 +61,7 @@ const getLocalizedPath = (newLang: string) => {
   </div>
 </header>
 
-<script>
+<!-- <script>
   import { STRAPI_API } from "astro:env/client";
 
   function getCookie(name: string) {
@@ -93,4 +101,4 @@ const getLocalizedPath = (newLang: string) => {
       }
     }
   });
-</script>
+</script> -->
