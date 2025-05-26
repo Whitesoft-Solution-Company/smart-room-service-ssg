@@ -4,7 +4,7 @@ import { languages } from '../i18n/ui';
 
 const API_BASE_URL = import.meta.env.STRAPI_API || 'https://service.ananyalipe.com';
 const { hotel } = Astro.props;
-const { name, logo } = hotel;
+const { name, logo } = hotel ?? {};
 
 const currentLocale = (Astro.currentLocale || 'en') as keyof typeof languages;
 const currentPath = Astro.url.pathname;
@@ -31,7 +31,7 @@ const getLocalizedPath = (newLang: string) => {
         {logo ? (
           <img id="hotelImage" class="h-10 w-auto" src={`${API_BASE_URL + logo.url}`} alt={name} />
         ): (
-            <img id="hotelImage" class="h-10 w-auto" src={`../../public/no-image.svg`} alt="No logo available" />
+            <img id="hotelImage" class="h-10 w-auto" src={`/no-image.svg`} alt="No logo available" />
         )}
       </a>
     </div>

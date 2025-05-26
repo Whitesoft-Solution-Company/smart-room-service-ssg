@@ -1,6 +1,6 @@
 ---
 const { hotel } = Astro.props;
-const { name } = hotel;
+const { name } = hotel ?? {};
 ---
 
 <footer class="bg-white relative dark:bg-gray-800">
