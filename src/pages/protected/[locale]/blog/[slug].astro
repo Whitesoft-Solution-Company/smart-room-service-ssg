@@ -8,7 +8,7 @@ interface Blog extends BlogLocalization {
 }
 interface BlogLocalization {
   locale: string;
-  slug: string;
+  slug: string | null;
   [key: string]: any;
 }
 // Fetch a single blog post based on the slug
