@@ -3,7 +3,7 @@ import { marked } from "marked";
 
 const { blog } = Astro.props;
 const { featuredImage, title, content } = blog;
-const url = import.meta.env.STRAPI_API || 'https://service.ananyalipe.com';
+const url = 'https://service.ananyalipe.com';
 const postImage = featuredImage || null;
 
 ---

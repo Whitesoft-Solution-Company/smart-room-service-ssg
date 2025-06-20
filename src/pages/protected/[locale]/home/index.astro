@@ -3,7 +3,7 @@ import Layout from "../../../../layouts/Layout.astro";
 import FeaturedBlogs from "../../../../components/home/featuredBlogs.astro";
 import BlogList from "../../../../components/home/blogList.astro";
 
-const API_BASE_URL = import.meta.env.STRAPI_API || 'https://service.ananyalipe.com';
+const API_BASE_URL = 'https://service.ananyalipe.com';
 const authToken = Astro.cookies.get('authToken')?.value;
 const { locale } = Astro.params;
 

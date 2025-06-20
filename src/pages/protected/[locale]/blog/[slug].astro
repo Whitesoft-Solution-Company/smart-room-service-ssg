@@ -13,7 +13,7 @@ interface BlogLocalization {
 }
 // Fetch a single blog post based on the slug
 export async function getStaticPaths() {
-  const API_BASE_URL = import.meta.env.STRAPI_API || "https://service.ananyalipe.com";
+  const API_BASE_URL = "https://service.ananyalipe.com";
   const url = `${API_BASE_URL}/api/blogs?populate[localizations][populate]=*`;
 
   const response = await fetch(url);
