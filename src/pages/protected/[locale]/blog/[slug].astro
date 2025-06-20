@@ -25,28 +25,30 @@ export async function getStaticPaths() {
   try {
     const data = await response.json();
     const paths = data.data.flatMap((blog: Blog) => {
-      const localizedPaths = blog.localizations.map(
-        (localization: BlogLocalization) => {
-          return {
-            params: {
-              locale: localization.locale,
-              slug: localization.slug,
-            },
-            props: { blog: localization },
-          };
-        }
-      );
-
-      return [
-        {
+      const localizedPaths = blog.localizations
+        .filter((loc) => typeof loc.slug === "string" && loc.slug.length > 0)
+        .map((localization) => ({
           params: {
-            locale: blog.locale,
-            slug: blog.slug,
+            locale: localization.locale,
+            slug: localization.slug,
           },
-          props: { blog },
-        },
-        ...localizedPaths, // Now contains valid objects
-      ];
+          props: { blog: localization },
+        }));
+
+      const mainPath =
+        typeof blog.slug === "string" && blog.slug.length > 0
+          ? [
+              {
+                params: {
+                  locale: blog.locale,
+                  slug: blog.slug,
+                },
+                props: { blog },
+              },
+            ]
+          : [];
+
+      return [...mainPath, ...localizedPaths];
     });
 
     return paths;
